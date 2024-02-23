@@ -8,7 +8,6 @@ const Login = () => {
   const [errorMessages, setErrorMessages] = useState();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
-  const [values, setvalues] = useState({ username: "", password: "" });
   const [loading, setloading] = useState(false);
   const [Username, setUsername] = useState();
   const [Password, setPassword] = useState();
@@ -25,7 +24,7 @@ const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(loginRoute);
+    setloading(true)
     if (validteform()) {
       const res = await axios.post(loginRoute, {
         Username,
@@ -40,6 +39,7 @@ const Login = () => {
         }, 2000);
       }
       if (data.status === true) {
+        setloading(false)
         localStorage.setItem(
           process.env.REACT_APP_LOCALHOST_KEY,
           JSON.stringify(data.user)
